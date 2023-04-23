@@ -1,6 +1,6 @@
 import kotlin.collections.*
 import kotlin.text.*
-class Registration {
+open class Registration {
     private val users = mutableListOf<Pair<String, String>>()
 
     fun registerUser(username: String, password: String): Boolean {

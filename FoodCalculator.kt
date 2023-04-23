@@ -1,6 +1,7 @@
-class FoodCalculator (result: IResult){
-    private var actualKilocalories: Float = 0.0F
+class FoodCalculator (private val result: IResult){
+    private var actualCalories: Float = 0.0F
     private var actualWaterAmount : Float = 0.0F
+
     val actualFoodItems : LinkedHashSet<FoodItem> =(setOf<FoodItem>() as LinkedHashSet<FoodItem>)
 
     fun addFoodItem(item : FoodItem){
@@ -20,5 +21,6 @@ class FoodCalculator (result: IResult){
     }
 
     fun normDiff(): Float{
+        return result.getKilocaloriesNorm()-actualCalories
     }
 }

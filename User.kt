@@ -1,16 +1,22 @@
-val aim = listOf("weight loss", "weight maintenance", "weight gain")
-class User() {
-
-    private var male: String = ""
+val aimlist = listOf("weight loss", "weight maintenance", "weight gain")
+val maleList = listOf("male", "female")
+class User(username:String, pass:String):Registration() {
+    private var name:String = username
+    private var password:String = pass
+    private var male: String = "null"
     private var age: Int = 0
     private var weight: Float = 0.0F
     private var height: Float = 0.0F
     private var aim: String = ""
     private var waterAmount: Float = 0.0F
     private var physicalActivity: String = ""
-    // геттеры и сеттеры
+
+    fun getName():String{
+        return this.name
+    }
+
     fun getMale(): String {
-        return male
+        return this.male
     }
 
     fun setMale(male: String) {
@@ -18,7 +24,7 @@ class User() {
     }
 
     fun getAge(): Int {
-        return age
+        return this.age
     }
 
     fun setAge(age: Int) {
@@ -26,7 +32,7 @@ class User() {
     }
 
     fun getWeight(): Float {
-        return weight
+        return this.weight
     }
 
     fun setWeight(weight: Float) {
@@ -34,7 +40,7 @@ class User() {
     }
 
     fun getHeight(): Float {
-        return height
+        return this.height
     }
 
     fun setHeight(height: Float) {
@@ -42,7 +48,7 @@ class User() {
     }
 
     fun getAim(): String {
-        return aim
+        return this.aim
     }
 
     fun setAim(aim: String) {
@@ -50,7 +56,7 @@ class User() {
     }
 
     fun getWaterAmount(): Float {
-        return waterAmount
+        return this.waterAmount
     }
 
     fun setWaterAmount(waterAmount: Float) {
@@ -58,7 +64,7 @@ class User() {
     }
 
     fun getPhysicalActivity(): String {
-        return physicalActivity
+        return this.physicalActivity
     }
 
     fun setPhysicalActivity(physicalActivity: String) {

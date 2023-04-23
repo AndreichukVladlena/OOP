@@ -1,4 +1,4 @@
-class ChildResult(private val height: Double, private val age: Int, private val weight: Double) : IResult {
+class ChildResult(private val height: Float, private val age: Int, private val weight: Float) : IResult {
     override var caloriesNorm: Float = 0.0F
     override val physicalActivityLevels = mapOf(
         "low" to "Less than 60 minutes of moderate to vigorous-intensity physical activity per day.",

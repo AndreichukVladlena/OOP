@@ -1,7 +1,7 @@
 interface IResult {
     val physicalActivityLevels: Map<String, String>
     var caloriesNorm:Float
-    fun getCaloriesNorm():Float{
+    fun getKilocaloriesNorm():Float{
         return this.caloriesNorm
     }
     fun calculateCaloriesNorm()

@@ -1,11 +1,11 @@
 import IResult
 
-class MaleResult(private val height: Double, private val age: Int, private val weight: Double) : IResult {
+class MaleResult(private val height: Float, private val age: Int, private val weight: Float) : IResult {
     override var caloriesNorm: Float = 0.0F
     override val physicalActivityLevels = mapOf(
-        "low" to "Less than 150 minutes of moderate-intensity physical activity per week.",
-        "normal" to "150-300 minutes of moderate-intensity physical activity per week.",
-        "high" to "More than 300 minutes of moderate-intensity physical activity per week."
+        "low" to "Less than 30 minutes of moderate-intensity physical activity per day.",
+        "normal" to "30 minutes of moderate-intensity physical activity per day.",
+        "high" to "More than 60 minutes of moderate-intensity physical activity per day."
     )
 
     override fun calculateNormalWeight(): Float{
