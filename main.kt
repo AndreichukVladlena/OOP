@@ -8,7 +8,7 @@ fun main(){
 
     registrar.registerUser("vlanuka", "ffgr45456")
 
-    //Registration
+    //Authentication
     println("Hello! Welcome to BeHealth app! You should sign up or log in to continue, so let's start.\nLog in or sign up?")
     answer= readln()
     do {
@@ -74,7 +74,7 @@ fun main(){
         answer = readln()
     } while(!errorsTracker.numberError(answer, 0.0F, 10.0F))
     user.setWaterAmount(answer.toFloat())
-    var result: IResult? = iservice.chooseResult(user.getAge(),user.getMale(),user.getHeight(),user.getWeight())
+    var result: IResult? = iservice.chooseResult(user)
 
     //Set user physical activity
     do {

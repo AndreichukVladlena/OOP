@@ -1,13 +1,13 @@
 class InterfaceService() {
-    fun chooseResult(age:Int, male:String, height:Float,weight:Float): IResult? {
-        if (age>=18 && male==maleList[0]) {
-            return MaleResult(height, age, weight)
+    fun chooseResult(user:User): IResult? {
+        if (user.getAge()>=18 && user.getMale()==maleList[0]) {
+            return MaleResult(user)
         }
-        else if (age>=18 && male==maleList[1]){
-            return FemaleResult(height, age, weight)
+        else if (user.getAge()>=18 && user.getMale()==maleList[1]){
+            return FemaleResult(user)
         }
-        else if(age<18){
-            return ChildResult(height, age, weight)
+        else if(user.getAge()<18){
+            return ChildResult(user)
         }
         else {return null}
     }

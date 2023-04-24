@@ -1,19 +1,15 @@
 interface IResult {
     val physicalActivityLevels: Map<String, String>
     var caloriesNorm:Float
-    fun getKilocaloriesNorm():Float{
-        return this.caloriesNorm
-    }
-    fun calculateCaloriesNorm()
+    var normalWeight:Float
+    var waterNorm:Float
+    var physActivityNorm:String
+
+    fun calculateCaloriesNorm():Float
     fun calculateNormalWeight(): Float
     fun calculateWaterNorm(): Float
     fun calculatePhysActivityNorm(): String{
             val physicalActivityLevel:String="normal"
             return physicalActivityLevels[physicalActivityLevel].toString()
     }
-
-//    fun getPhysActivityTips(): String
-//    fun getAimTips(): String
-
-//    fun getWaterTips(): String
 }
