@@ -4,7 +4,7 @@ import kotlin.reflect.typeOf
 class RegistrationErrorTracker {
     fun registrationResult(flag: Boolean): String {
         if (flag) {
-            return "You have successfully registered!"
+            return "You have successfully authenticated!"
         } else {
             return "User with the same username is already exists!"
         }

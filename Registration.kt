@@ -12,4 +12,14 @@ open class Registration {
         users.add(username to password)
         return true
     }
+
+    fun loginUser(username: String, password: String): Boolean {
+        val user = users.find { it.first == username }
+        if (user != null && user.second == password) {
+            // Пользователь найден и пароль совпадает
+            return true
+        }
+        // Пользователь не найден или пароль не совпадает
+        return false
+    }
 }
