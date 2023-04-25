@@ -1,4 +1,5 @@
 import kotlin.collections.List
+import kotlin.reflect.typeOf
 
 class InputErrorTracker {
     fun registrationResult(flag: Boolean): String {
@@ -14,10 +15,8 @@ class InputErrorTracker {
     }
 
     fun numberError(num:String, start:Number, end:Number):Boolean{
-        val number:Number? = num.toFloatOrNull()
-        when (number) {
-            is Int -> return number in start.toInt()..end.toInt()
-            is Float -> return number in start.toFloat()..end.toFloat()
+        when (num.toFloatOrNull()) {
+            is Float -> return num.toFloat() in start.toFloat()..end.toFloat()
             else -> return false
         }
     }
