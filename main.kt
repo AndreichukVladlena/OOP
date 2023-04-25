@@ -1,3 +1,5 @@
+import java.time.LocalDate
+
 fun main(){
     val registrar = Registration()
     val errorsTracker = RegistrationErrorTracker()
@@ -41,38 +43,45 @@ fun main(){
     user.setMale(answer)
 
     //Set user age
+    var year:String=""
+    var month:String=""
+    var day:String=""
     do {
-        println("Enter your age:")
-        answer = readln()
-    } while(!errorsTracker.numberError(answer, 1.0F,100.0F))
-    user.setAge(answer.toInt())
-
+        println("Enter your birthday year:")
+        year = readln()
+        println("Enter your birthday month:")
+        month = readln()
+        println("Enter your birthday day:")
+        day = readln()
+    } while(!errorsTracker.numberError(year, yearRangeList[0], yearRangeList[1]) || !errorsTracker.numberError(month, monthRangeList[0],monthRangeList[1]) || !errorsTracker.numberError(day,dayRangeList[0],dayRangeList[1]))
+    user.setBirthDate(year.toInt(),month.toInt(),day.toInt())
+    user.setAge()
     //Set user weight
     do {
         println("Enter your weight:")
         answer = readln()
-    } while(!errorsTracker.numberError(answer, 10.0F,250.0F))
+    } while(!errorsTracker.numberError(answer, weightRangeList[0],weightRangeList[1]))
     user.setWeight(answer.toFloat())
 
     //Set user height
     do {
         println("Enter your height:")
         answer = readln()
-    } while(!errorsTracker.numberError(answer,50.0F,250.0F))
+    } while(!errorsTracker.numberError(answer,heightRangeList[0],heightRangeList[1]))
     user.setHeight(answer.toFloat())
 
     //Set user aim
     do {
-        println("Choose your aim:\n${aimlist.joinToString()}")
+        println("Choose your aim:\n${aimList.joinToString()}")
         answer = readln()
-    }while(!errorsTracker.incorrectChoice(answer, aimlist))
+    }while(!errorsTracker.incorrectChoice(answer, aimList))
     user.setAim(answer)
 
     //Set user daily water amount
     do {
         println("Enter your daily water amount:")
         answer = readln()
-    } while(!errorsTracker.numberError(answer, 0.0F, 10.0F))
+    } while(!errorsTracker.numberError(answer, waterAmountRangeList[0], waterAmountRangeList[1]))
     user.setWaterAmount(answer.toFloat())
     var result: IResult? = iservice.chooseResult(user)
 
@@ -81,7 +90,7 @@ fun main(){
         val activityLevels = result?.physicalActivityLevels!!.map { "${it.key}\n   ${it.value}" }.joinToString("\n")
         println("Enter your daily physical activity amount:\n$activityLevels")
         answer = readln()
-    } while(!errorsTracker.numberError(answer, 0.0F, 10.0F) && !errorsTracker.incorrectChoice(answer, result?.physicalActivityLevels!!.keys.toList()))
+    } while(!errorsTracker.incorrectChoice(answer, result?.physicalActivityLevels!!.keys.toList()))
     user.setPhysicalActivity(answer)
 
     //Show user info
@@ -104,11 +113,11 @@ fun main(){
                do {
                    println("Enter calories of one item:")
                    calories = readln()
-               }while(!errorsTracker.numberError(calories,5,10000))
+               }while(!errorsTracker.numberError(calories,caloriesRangeList[0],caloriesRangeList[1]))
                do{
                    println("Enter amount of items you ate:")
                    amount = readln()
-               }while(!errorsTracker.numberError(amount,0,300))
+               }while(!errorsTracker.numberError(amount,amountRangeList[0],amountRangeList[1]))
 
                val foodItem=FoodItem(name)
                foodItem.editItemCalories(calories.toFloat())

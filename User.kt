@@ -1,6 +1,8 @@
-val aimlist = listOf("weight loss", "weight maintenance", "weight gain")
-val maleList = listOf("male", "female")
-class User(username:String, pass:String):Registration() {
+import java.time.LocalDate
+import java.time.Month
+import java.time.Year
+import java.time.temporal.ChronoUnit
+class User(username:String, pass:String) {
     private var name:String = username
     private var password:String = pass
     private var male: String = "null"
@@ -10,6 +12,7 @@ class User(username:String, pass:String):Registration() {
     private var aim: String = ""
     private var waterAmount: Float = 0.0F
     private var physicalActivity: String = ""
+    private var birthDate: LocalDate?=null
 
     fun getName():String{
         return this.name
@@ -27,8 +30,8 @@ class User(username:String, pass:String):Registration() {
         return this.age
     }
 
-    fun setAge(age: Int) {
-        this.age = age
+    fun setAge() {
+        this.age=ChronoUnit.YEARS.between(this.birthDate,LocalDate.now()).toInt()
     }
 
     fun getWeight(): Float {
@@ -69,6 +72,14 @@ class User(username:String, pass:String):Registration() {
 
     fun setPhysicalActivity(physicalActivity: String) {
         this.physicalActivity = physicalActivity
+    }
+
+    fun getBirthDate():LocalDate?{
+        return this.birthDate
+    }
+
+    fun setBirthDate(year: Int,month:Int,day:Int){
+        this.birthDate = LocalDate.of(year,month,day)
     }
 
 }

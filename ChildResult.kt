@@ -20,13 +20,13 @@ class ChildResult(private val user: User) : IResult {
     override fun calculateCaloriesNorm(): Float {
         var calories: Float = (((10 * user.getWeight()) + (6.25 * user.getHeight()) - (5 * user.getAge()) + 5) * 1.2).toFloat()
         when(user.getAim()){
-            aimlist[0]->{
+            aimList[0]->{
                 return calories * 0.8F
             }
-            aimlist[1]->{
+            aimList[1]->{
                 return calories
             }
-            aimlist[2]->{
+            aimList[2]->{
                 return calories * 1.2F
             }
             else->{
