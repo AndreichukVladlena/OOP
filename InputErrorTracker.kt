@@ -1,7 +1,6 @@
 import kotlin.collections.List
-import kotlin.reflect.typeOf
 
-class RegistrationErrorTracker {
+class InputErrorTracker {
     fun registrationResult(flag: Boolean): String {
         if (flag) {
             return "You have successfully authenticated!"

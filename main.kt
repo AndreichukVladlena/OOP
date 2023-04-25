@@ -1,8 +1,6 @@
-import java.time.LocalDate
-
 fun main(){
     val registrar = Registration()
-    val errorsTracker = RegistrationErrorTracker()
+    val errorsTracker = InputErrorTracker()
     var username:String=""
     var password:String=""
     var answer:String=""
