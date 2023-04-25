@@ -99,8 +99,11 @@ fun main(){
 
     println("Now you can track your daily food and water amount.")
     var foodTracker=FoodTracker(result)
+    var waterTracker=WaterTracker(result)
+    var physicalActivityTracker=PhysicalActivityTracker(result)
+
     do{
-       println("\nAdd food item(1), remove food item(2), add water glass(3), show food list(4), exit(5)")
+       println("\nAdd food item(1), remove food item(2), add water glass(3),remove water glass(4), show food list(5), edit your today physical activity(in minutes)(6), exit(7), ")
         answer= readln()
        when(answer.toIntOrNull()){
            1->{
@@ -127,13 +130,24 @@ fun main(){
                foodTracker.removeFoodItem(readln())
            }
            3->{
-               foodTracker.addWaterGlass()
+               waterTracker.addWaterGlass()
            }
            4->{
-               foodTracker.getActualFoodList().forEach {println ("${it.getItemName().replaceFirstChar { it.uppercase() }}\n   Amount: ${it.getItemAmount()}\n   Calories of one item: ${it.getItemCalories()}\n   Consumed calories: ${it.resultCalories()}")}
+               waterTracker.removeWaterGlass()
            }
-           5->break
+           5->{foodTracker.getActualFoodList().forEach {println ("${it.getItemName().replaceFirstChar { it.uppercase() }}\n   Amount: ${it.getItemAmount()}\n   Calories of one item: ${it.getItemCalories()}\n   Consumed calories: ${it.resultCalories()}")}
+           }
+           6->{
+               do {
+                   println("Enter your minutes of today physical activity:")
+                   answer = readln()
+               }while(!errorsTracker.numberError(answer, dailyPhysActivityRangeList[0], dailyPhysActivityRangeList[1]))
+               physicalActivityTracker.editPhysicalActivityMinutes(answer.toInt())
+           }
+           7->{
+               break
+           }
        }
-        println("\n\n-ACTUAL INFO-\nWater difference: ${foodTracker.waterNormDiff()}\nCalories difference: ${foodTracker.caloriesNormDiff()}")
-    }while(answer!="5")
+        println("\n\n-ACTUAL INFO-\nWater difference: ${waterTracker.waterNormDiff()}\nCalories difference: ${foodTracker.caloriesNormDiff()}\nPhysical activity difference: ${physicalActivityTracker.physActivityNormDiff()}")
+    }while(answer!="7")
 }
