@@ -120,7 +120,7 @@ fun main(){
                    amount = readln()
                }while(!errorsTracker.numberError(amount,amountRangeList[0],amountRangeList[1]))
 
-               val foodItem=FoodItem(name)
+               val foodItem=ActualFoodItem(name)
                foodItem.editItemCalories(calories.toFloat())
                foodItem.setItemAmount(amount.toFloat())
                foodTracker.addFoodItem(foodItem)
@@ -135,7 +135,7 @@ fun main(){
            4->{
                waterTracker.removeWaterGlass()
            }
-           5->{foodTracker.getActualFoodList().forEach {println ("${it.getItemName().replaceFirstChar { it.uppercase() }}\n   Amount: ${it.getItemAmount()}\n   Calories of one item: ${it.getItemCalories()}\n   Consumed calories: ${it.resultCalories()}")}
+           5->{foodTracker.getActualFoodList().forEach {println ("${it.getItemName().replaceFirstChar { it.uppercase() }}\n   Amount: ${it.getItemAmount()}\n   Calories of one item: ${it.getItemCalories()}\n   Consumed calories: ${it.getResultCalories()}")}
            }
            6->{
                do {
@@ -148,6 +148,6 @@ fun main(){
                break
            }
        }
-        println("\n\n-ACTUAL INFO-\nWater difference: ${waterTracker.waterNormDiff()}\nCalories difference: ${foodTracker.caloriesNormDiff()}\nPhysical activity difference: ${physicalActivityTracker.physActivityNormDiff()}")
+        println("\n\n-ACTUAL INFO-\nWater difference: ${waterTracker.waterNormDiff()}\nCalories you use: ${foodTracker.calculateActualKilocalories()}\nCalories difference: ${foodTracker.caloriesNormDiff()}\nPhysical activity difference: ${physicalActivityTracker.physActivityNormDiff()}")
     }while(answer!="7")
 }

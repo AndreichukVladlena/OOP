@@ -18,6 +18,10 @@ class User(username:String, pass:String) {
         return this.name
     }
 
+    fun getPassword():String{
+        return this.password
+    }
+
     fun getMale(): String {
         return this.male
     }
