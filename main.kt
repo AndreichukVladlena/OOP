@@ -98,7 +98,7 @@ fun main(){
     println("\n\n\n-IT'S YOUR NORMS ACCORDING TO YOUR PARAMETERS-\nYour daily calories norm: ${result.caloriesNorm}\nYour daily water norm: ${result.waterNorm}\nYour normal weight: ${result.normalWeight}\nYour physical activity norm: ${result.physActivityNorm}")
 
     println("Now you can track your daily food and water amount.")
-    var foodCalculator=FoodCalculator(result)
+    var foodTracker=FoodTracker(result)
     do{
        println("\nAdd food item(1), remove food item(2), add water glass(3), show food list(4), exit(5)")
         answer= readln()
@@ -120,20 +120,20 @@ fun main(){
                val foodItem=FoodItem(name)
                foodItem.editItemCalories(calories.toFloat())
                foodItem.setItemAmount(amount.toFloat())
-               foodCalculator.addFoodItem(foodItem)
+               foodTracker.addFoodItem(foodItem)
            }
            2->{
                println("Enter food item name:")
-               foodCalculator.removeFoodItem(readln())
+               foodTracker.removeFoodItem(readln())
            }
            3->{
-               foodCalculator.addWaterGlass()
+               foodTracker.addWaterGlass()
            }
            4->{
-               foodCalculator.getActualFoodList().forEach {println ("${it.getItemName().replaceFirstChar { it.uppercase() }}\n   Amount: ${it.getItemAmount()}\n   Calories of one item: ${it.getItemCalories()}\n   Consumed calories: ${it.resultCalories()}")}
+               foodTracker.getActualFoodList().forEach {println ("${it.getItemName().replaceFirstChar { it.uppercase() }}\n   Amount: ${it.getItemAmount()}\n   Calories of one item: ${it.getItemCalories()}\n   Consumed calories: ${it.resultCalories()}")}
            }
            5->break
        }
-        println("\n\n-ACTUAL INFO-\nWater difference: ${foodCalculator.waterNormDiff()}\nCalories difference: ${foodCalculator.caloriesNormDiff()}")
+        println("\n\n-ACTUAL INFO-\nWater difference: ${foodTracker.waterNormDiff()}\nCalories difference: ${foodTracker.caloriesNormDiff()}")
     }while(answer!="5")
 }

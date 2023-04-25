@@ -1,6 +1,6 @@
-class FoodCalculator (private val result: IResult){
+class FoodTracker (private val result: IResult){
     private var actualCalories: Float = 0.0F
-    private var actualWaterAmount : Float = 0.0F
+
     var actualFoodItems = LinkedHashSet<FoodItem> ()
 
     fun addFoodItem(item : FoodItem){
@@ -14,10 +14,6 @@ class FoodCalculator (private val result: IResult){
         }
     }
 
-    fun addWaterGlass(){
-        actualWaterAmount += 0.25F
-    }
-
     fun calculateActualKilocalories():Float{
         var totalCalories: Float = 0.0F
         for (foodItem in actualFoodItems) {
@@ -28,10 +24,6 @@ class FoodCalculator (private val result: IResult){
 
     fun caloriesNormDiff(): Float{
         return result.caloriesNorm-actualCalories
-    }
-
-    fun waterNormDiff():Float{
-        return result.waterNorm-actualWaterAmount
     }
 
     fun getActualFoodList(): LinkedHashSet<FoodItem> {
