@@ -150,4 +150,5 @@ fun main(){
        }
         println("\n\n-ACTUAL INFO-\nWater difference: ${waterTracker.waterNormDiff()}\nCalories you use: ${foodTracker.calculateActualKilocalories()}\nCalories difference: ${foodTracker.caloriesNormDiff()}\nPhysical activity difference: ${physicalActivityTracker.physActivityNormDiff()}")
     }while(answer!="7")
+    
 }

@@ -1,10 +1,10 @@
 package DBManagers
 import FoodItem
-class FoodManager {
+open class FoodManager {
     private var foodItems = LinkedHashSet<FoodItem> ()
 
     fun addItem(foodItem: FoodItem){
-        foodItems.add(foodItem)
+        this.foodItems.add(foodItem)
     }
 
     fun removeItem(foodItem: FoodItem):Boolean{

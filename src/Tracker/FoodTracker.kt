@@ -9,7 +9,7 @@ class FoodTracker (private val result: IResult){
     fun addFoodItem(item : ActualFoodItem){
         actualFoodItems.add(item)
         this.actualCalories+=item.getResultCalories()
-        if(foodManager.foodItemExists(item)){foodManager.addItem(item)}
+        if(!foodManager.foodItemExists(item)){foodManager.addItem(item)}
     }
 
     fun removeFoodItem(name: String){
