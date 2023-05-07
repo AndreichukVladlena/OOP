@@ -2,6 +2,7 @@ import java.time.LocalDate
 val aimList = listOf("weight loss", "weight maintenance", "weight gain")
 val maleList = listOf("male", "female")
 
+
 val yearRangeList = listOf(1900.0F, LocalDate.now().year.toFloat())
 val monthRangeList = listOf(1.0F, 12.0F)
 val dayRangeList = listOf(1.0F, 31.0F)

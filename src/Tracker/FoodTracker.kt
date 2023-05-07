@@ -6,6 +6,10 @@ class FoodTracker (private val result: IResult){
 
     var actualFoodItems = LinkedHashSet<ActualFoodItem> ()
 
+    fun getActualCalories():Float{
+        return this.actualCalories
+    }
+
     fun addFoodItem(item : ActualFoodItem){
         actualFoodItems.add(item)
         this.actualCalories+=item.getResultCalories()
