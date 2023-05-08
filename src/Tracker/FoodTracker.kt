@@ -1,31 +1,32 @@
 import DBManagers.FoodManager
+import src.DBManagers.ActualFoodManager
 
 class FoodTracker (private val result: IResult){
     private var foodManager = FoodManager()
+    private var actualFoodManager=ActualFoodManager()
     private var actualCalories: Float = 0.0F
 
-    var actualFoodItems = LinkedHashSet<ActualFoodItem> ()
 
     fun getActualCalories():Float{
         return this.actualCalories
     }
 
     fun addFoodItem(item : ActualFoodItem){
-        actualFoodItems.add(item)
+        actualFoodManager.addItem(item)
         this.actualCalories+=item.getResultCalories()
         if(!foodManager.foodItemExists(item)){foodManager.addItem(item)}
     }
 
     fun removeFoodItem(name: String){
-        for (item in actualFoodItems) {
-            if (item.getItemName() == name) actualFoodItems.remove(item)
+        for (item in actualFoodManager.getCollection()){
+            if(item.getItemName()==name)actualFoodManager.removeItem(item)
         }
     }
 
     fun calculateActualKilocalories():Float{
         var totalCalories: Float = 0.0F
-        for (foodItem in actualFoodItems) {
-            totalCalories += foodItem.getResultCalories()
+        for(item in actualFoodManager.getCollection()){
+            totalCalories += item.getResultCalories()
         }
         return totalCalories
     }
@@ -35,6 +36,6 @@ class FoodTracker (private val result: IResult){
     }
 
     fun getActualFoodList(): LinkedHashSet<ActualFoodItem> {
-        return LinkedHashSet(this.actualFoodItems)
+        return actualFoodManager.getCollection()
     }
 }

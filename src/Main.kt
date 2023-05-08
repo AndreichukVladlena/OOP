@@ -204,4 +204,5 @@ class Main {
             println("Your success grade: ${successGrade.countSuccess()}")
         }
     }
+
 }
