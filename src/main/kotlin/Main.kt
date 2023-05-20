@@ -22,6 +22,14 @@ import waterAmountRangeList
 import weightRangeList
 import yearRangeList
 
+import UserSerializer
+import ResultSerializer
+import FoodItemSerializer
+
+import com.google.gson.*
+import java.lang.reflect.Type
+
+
 class Main {
     companion object {
         @JvmStatic
@@ -124,6 +132,11 @@ class Main {
             } while (!errorsTracker.incorrectChoice(answer, result?.physicalActivityLevels!!.keys.toList()))
             user.setPhysicalActivity(answer)
 
+            val sd =UserSerializer()
+            val su = sd.serialize(user)
+            println(su)
+            println(sd.deserialize(su))
+
             //Show user info
             println("-YOUR PARAMETERS-\nName: ${user.getName()}\nAge: ${user.getAge()}\nMale: ${user.getMale()}\nHeight: ${user.getHeight()}cm\nWeight: ${user.getWeight()}kg\nDaily water amount: ${user.getWaterAmount()}l\nAim: ${user.getAim()}\nPhysical activity: ${user.getPhysicalActivity()}")
 
@@ -134,6 +147,7 @@ class Main {
             var foodTracker = FoodTracker(result)
             var waterTracker = WaterTracker(result)
             var physicalActivityTracker = PhysicalActivityTracker(result)
+
 
             do {
                 println("\nAdd food item(1), remove food item(2), add water glass(3),remove water glass(4), show food list(5), edit your today physical activity(in minutes)(6), exit(7), ")
@@ -157,6 +171,7 @@ class Main {
                         foodItem.editItemCalories(calories.toFloat())
                         foodItem.setItemAmount(amount.toFloat())
                         foodTracker.addFoodItem(foodItem)
+
                     }
 
                     2 -> {
@@ -204,5 +219,4 @@ class Main {
             println("Your success grade: ${successGrade.countSuccess()}")
         }
     }
-
 }
