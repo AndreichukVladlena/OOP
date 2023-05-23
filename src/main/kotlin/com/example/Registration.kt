@@ -5,18 +5,18 @@ class Registration {
 //    private val users = mutableListOf<Pair<String, String>>()
     private val userManager = UserManager()
 
-    fun registerUser(username: String, password: String): Boolean {
-        if (userManager.usernameExists(username, password)) {
+    fun registerUser(user:User): Boolean {
+        if (userManager.usernameExists(user)) {
             // Пользователь с таким именем уже существует
             return false
         }
 //        // Регистрация пользователя
 //        users.add(username to password)
-        userManager.addUser(username, password)
+        userManager.addUser(user)
         return true
     }
 
-    fun loginUser(username: String, password: String): Boolean {
-        return userManager.userExists(username, password)
+    fun loginUser(user:User): Boolean {
+        return userManager.userExists(user)
     }
 }

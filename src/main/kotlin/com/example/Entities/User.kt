@@ -1,14 +1,12 @@
 import java.time.LocalDate
-import java.time.Month
-import java.time.Year
 import java.time.temporal.ChronoUnit
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.Contextual
 
 @Serializable
-data class User(val username:String, var pass:String) {
-    private val name:String = username
-    private var password:String = pass
+data class User(val username:String, var password:String) {
+//    private val name:String = username
+//    private var password:String = pass
     private var male: String = "null"
     private var age: Int = 0
     private var weight: Float = 0.0F
@@ -19,8 +17,13 @@ data class User(val username:String, var pass:String) {
     @Contextual
     private var birthDate: LocalDate? =null
 
+    init {
+        require(username.isNotBlank()) { "Username must not be blank" }
+        require(password.isNotBlank()) { "Password must not be blank" }
+    }
+
     fun getName():String{
-        return this.name
+        return this.username
     }
 
     fun getPassword():String{
