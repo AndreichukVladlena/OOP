@@ -26,4 +26,8 @@ class UserManager {
         if (user != null && user.second == password){return true}
         else {return false}
     }
+
+    fun usersList(): MutableList<Pair<String, String>>{
+        return users
+    }
 }

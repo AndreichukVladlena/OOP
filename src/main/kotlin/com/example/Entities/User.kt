@@ -2,8 +2,12 @@ import java.time.LocalDate
 import java.time.Month
 import java.time.Year
 import java.time.temporal.ChronoUnit
-class User(username:String, pass:String) {
-    private var name:String = username
+import kotlinx.serialization.Serializable
+import kotlinx.serialization.Contextual
+
+@Serializable
+data class User(val username:String, var pass:String) {
+    private val name:String = username
     private var password:String = pass
     private var male: String = "null"
     private var age: Int = 0
@@ -12,7 +16,8 @@ class User(username:String, pass:String) {
     private var aim: String = ""
     private var waterAmount: Float = 0.0F
     private var physicalActivity: String = ""
-    private var birthDate: LocalDate?=null
+    @Contextual
+    private var birthDate: LocalDate? =null
 
     fun getName():String{
         return this.name
