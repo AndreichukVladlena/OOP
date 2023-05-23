@@ -2,32 +2,31 @@ package DBManagers
 import User
 
 class UserManager {
-    private val users = mutableListOf<Pair<String, String>>()
-
-    fun addUser(username: String,password: String){
-        users.add(username to password)
+    private var users= mutableListOf<User>()
+    fun addUser(user:User){
+        users.add(user)
     }
 
-    fun removeUser(username:String, password :String):Boolean{
-        if (userExists(username,password)) {
-            users.remove(username to password)
+    fun removeUser(user: User):Boolean{
+        if (userExists(user)) {
+            users.remove(user)
             return true
         }
         return false
     }
 
-    fun usernameExists(username: String,password: String):Boolean{
-        if (users.any { it.first == username }){return true}
+    fun usernameExists(user:User):Boolean{
+        if (users.any { it.getName() == user.getName() }){return true}
         else{return false}
     }
 
-    fun userExists(username: String, password: String): Boolean{
-        val user = users.find { it.first == username }
-        if (user != null && user.second == password){return true}
+    fun userExists(user:User): Boolean{
+        val currentUser = users.find { it.getName() == user.getName() }
+        if (currentUser != null && currentUser.getPassword() == user.getPassword()){return true}
         else {return false}
     }
 
-    fun usersList(): MutableList<Pair<String, String>>{
+    fun usersList(): MutableList<User>{
         return users
     }
 }
