@@ -1,39 +1,42 @@
 package com.example.Controllers
 
-import User
-import com.example.ErrorTracker.*
-import com.example.const.*
 import DBManagers.UserManager
-import io.ktor.server.routing.*
-import io.ktor.http.HttpStatusCode
+import com.example.Entities.User
+import io.ktor.http.*
 import io.ktor.server.application.*
-import io.ktor.server.response.respond
-import io.ktor.server.request.receive
+import io.ktor.server.request.*
+import io.ktor.server.response.*
+import io.ktor.server.routing.*
 
 
 fun Route.usersRouting() {
     var userManager = UserManager()
     var user1=User("vlan", "4567")
-    user1.setMale("female")
-    var user2=User("spuna", "458745")
-    var user3=User("sd", "556556")
+    user1.setMale("male")
+    user1.setHeight(180.0F)
+    user1.setWeight(58.0F)
     userManager.addUser(user1)
-    userManager.addUser(user2)
-    userManager.addUser(user3)
-
+//    user1.setMale("female")
+//    user1.setBirthDate(2004, 6, 27)
+//    var user2=User("spuna", "458745")
+//    var user3=User("sd", "556556")
+//    userManager.addUser(user1)
+//    userManager.addUser(user2)
+//    userManager.addUser(user3)
+//    userManager.setUserData(user1)
+//    userManager.setUserData(user2)
+//    userManager.setUserData(user3)
     route("api/users") {
-        get("/get") {
-            call.respond(HttpStatusCode.OK, userManager.usersList())
+        get("/get/{user_id}") {
+            val userData = userManager.getUserData(call.parameters["user_id"].toString())
+            if(userData!=null) call.respond(HttpStatusCode.OK, userData.toJson())
+            else call.respond(HttpStatusCode.BadRequest, "Not found ${call.parameters["user_id"]}")
         }
         post("/register") {
             val userRequest = call.receive<User>()
 
-            if (userManager.usernameExists(userRequest)) {
-                call.respond(HttpStatusCode.BadRequest, "Username already exists")
-            } else {
-                userManager.addUser(userRequest)
-                call.respond(HttpStatusCode.OK, "Registration successful")
-            }
+           if (userManager.addUser(userRequest)) call.respond(HttpStatusCode.OK, "Success")
+               else call.respond(HttpStatusCode.BadRequest, "Username exists")
         }
 
         post("/login") {
@@ -45,25 +48,10 @@ fun Route.usersRouting() {
                 call.respond(HttpStatusCode.Unauthorized, "Invalid username or password")
             }
         }
-        post("/setData"){
+        post("/setData/{user_id}"){
             val userRequest = call.receive<User>()
-            val userMale=call.receive<String>()
-            if (userRequest in userManager.usersList()){
-                if(userRequest.getMale().isBlank() || userRequest.getAge()==0 || userRequest.getWeight()==0.0F || userRequest.getHeight()==0.0F || userRequest.getAim().isBlank() || userRequest.getWaterAmount()==0.0F || userRequest.getPhysicalActivity().isBlank() || userRequest.getBirthDate()==null){
-                    call.respond(HttpStatusCode.BadRequest, "Not all fields are filled")
-                }else{
-                    if(incorrectChoice(userRequest.getMale(),maleList))
-                        call.respond(HttpStatusCode.BadRequest, "Invalid input(choose \"male\" or \"female\")")
-                    if(incorrectChoice(userRequest.getAim(),aimList))
-                        call.respond(HttpStatusCode.BadRequest, "Invalid input(choose \"weight loss\", \"weight maintenance\", \"weight gain\")")
-                    if(numberError(userRequest.getWeight(), weightRangeList[0], weightRangeList[1]) || numberError(userRequest.getHeight(),
-                            heightRangeList[0], heightRangeList[1]) || numberError(userRequest.getWaterAmount(),
-                                waterAmountRangeList[0], waterAmountRangeList[1]))
-                        call.respond(HttpStatusCode.OK, "Data saved")
-                }
-            }else{
-                call.respond(HttpStatusCode.Unauthorized, "You have to authorize")
-            }
+            if (userManager.setUserData(call.parameters["user_id"].toString(), userRequest))call.respond(HttpStatusCode.OK, "Updated")
+            else call.respond(HttpStatusCode.BadRequest, "Not found")
         }
     }
 }

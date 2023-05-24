@@ -1,3 +1,5 @@
+import com.example.Entities.User
+import com.example.const.maleList
 class InterfaceService() {
     fun chooseResult(user:User): IResult? {
         if (user.getAge()>=18 && user.getMale()==maleList[0]) {

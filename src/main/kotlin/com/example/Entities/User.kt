@@ -1,11 +1,15 @@
-import java.time.LocalDate
-import java.time.temporal.ChronoUnit
-import kotlinx.serialization.Serializable
+package com.example.Entities
+
+import kotlinx.datetime.LocalDate
+import kotlinx.datetime.minus
 import kotlinx.serialization.Contextual
+import kotlinx.serialization.Serializable
+import org.bson.types.ObjectId
+import org.intellij.lang.annotations.Identifier
 
 @Serializable
-data class User(val username:String, var password:String) {
-//    private val name:String = username
+data class User(private val username:String, private var password:String) {
+//    private val username:String = name
 //    private var password:String = pass
     private var male: String = "null"
     private var age: Int = 0
@@ -14,15 +18,17 @@ data class User(val username:String, var password:String) {
     private var aim: String = ""
     private var waterAmount: Float = 0.0F
     private var physicalActivity: String = ""
+    private var birthDate: LocalDate? = null
+    @Identifier
     @Contextual
-    private var birthDate: LocalDate? =null
-
+    @Transient
+    val id: ObjectId? = null
     init {
         require(username.isNotBlank()) { "Username must not be blank" }
         require(password.isNotBlank()) { "Password must not be blank" }
     }
 
-    fun getName():String{
+    fun getUsername():String{
         return this.username
     }
 
@@ -43,7 +49,8 @@ data class User(val username:String, var password:String) {
     }
 
     fun setAge() {
-        this.age=ChronoUnit.YEARS.between(this.birthDate,LocalDate.now()).toInt()
+        this.age= this.birthDate!!.minus(LocalDate(2023,5,23)).years
+//        this.age=ChronoUnit.YEARS.between(this.birthDate, LocalDate(2023, 5, 23)).toInt()
     }
 
     fun getWeight(): Float {
@@ -91,7 +98,10 @@ data class User(val username:String, var password:String) {
     }
 
     fun setBirthDate(year: Int,month:Int,day:Int){
-        this.birthDate = LocalDate.of(year,month,day)
+        this.birthDate = LocalDate(year,month,day)
     }
+//    fun setBirthDate(date:LocalDate){
+//        this.birthDate=date
+//    }
 
 }

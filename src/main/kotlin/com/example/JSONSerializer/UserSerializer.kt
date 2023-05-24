@@ -2,6 +2,7 @@ import com.google.gson.*
 import java.lang.reflect.Type
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
+import com.example.Entities.User
 
 class UserSerializer {
     private val gson: Gson
@@ -30,7 +31,7 @@ class UserSerializer {
             context: JsonSerializationContext?
         ): JsonElement {
             val jsonObject = JsonObject()
-            jsonObject.addProperty("name", src?.getName())
+            jsonObject.addProperty("name", src?.getUsername())
             jsonObject.addProperty("password", src?.getPassword())
             jsonObject.addProperty("male", src?.getMale())
             jsonObject.addProperty("age", src?.getAge())
@@ -39,7 +40,7 @@ class UserSerializer {
             jsonObject.addProperty("aim", src?.getAim())
             jsonObject.addProperty("waterAmount", src?.getWaterAmount())
             jsonObject.addProperty("physicalActivity", src?.getPhysicalActivity())
-            jsonObject.addProperty("birthDate", src?.getBirthDate()?.format(DateTimeFormatter.ISO_DATE))
+//            jsonObject.addProperty("birthDate", src?.getBirthDate()?.format(DateTimeFormatter.ISO_DATE))
 
             return jsonObject
         }

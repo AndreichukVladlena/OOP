@@ -1,3 +1,5 @@
+import com.example.Entities.User
+import com.example.const.aimList
 
 class FemaleResult(private val user: User) : IResult {
     override val physicalActivityLevels = mapOf(

@@ -1,3 +1,6 @@
+import com.example.Entities.User
+import com.example.const.*
+
 class ChildResult(private val user: User) : IResult {
     override val physicalActivityLevels = mapOf(
         "low" to "Less than 60 minutes of moderate to vigorous-intensity physical activity per day.",

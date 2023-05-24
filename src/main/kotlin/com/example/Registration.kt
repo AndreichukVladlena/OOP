@@ -1,11 +1,12 @@
 import DBManagers.UserManager
+import com.example.Entities.User
 import kotlin.collections.*
 import kotlin.text.*
 class Registration {
 //    private val users = mutableListOf<Pair<String, String>>()
     private val userManager = UserManager()
 
-    fun registerUser(user:User): Boolean {
+    fun registerUser(user: User): Boolean {
         if (userManager.usernameExists(user)) {
             // Пользователь с таким именем уже существует
             return false

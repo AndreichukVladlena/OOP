@@ -1,3 +1,4 @@
+import com.example.const.physicalActivityNorm
 class PhysicalActivityTracker(private val result: IResult) {
     private var actualPhysicalActivityMinutes : Int = 0
 
