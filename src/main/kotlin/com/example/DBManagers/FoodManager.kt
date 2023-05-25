@@ -2,7 +2,6 @@ package DBManagers
 
 import FoodItem
 import com.example.DBManagers.DataBase
-import com.example.Entities.User
 import org.bson.Document
 import org.bson.types.ObjectId
 
@@ -42,14 +41,10 @@ class FoodManager{
         return dataBase.isNameFieldExist("food items", "name", item.getItemName())
     }
 
-    fun userExists(user: User): Boolean{
-        return dataBase.isNameFieldExist("user","username", user.getUsername()) && dataBase.isNameFieldExist("user","password", user.getPassword())
-    }
-
     fun itemToDoc(item: FoodItem): Document {
         return Document(mapOf(
             "_id" to ObjectId(),
             "name" to item.getItemName(),
-            "calories" to item.getItemCalories()
+            "calories" to item.getItemCalories()))
     }
 }
