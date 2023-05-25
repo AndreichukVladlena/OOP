@@ -43,9 +43,9 @@ object DataBase {
         collection.replaceOne(eq("_id",document["_id"]),document)
     }
 
-    fun delete(collectionName: String, document: Document) {
+    fun delete(collectionName: String, id:String) {
         val collection = database.getCollection(collectionName)
-        collection.deleteOne(collection.findOneById(document["_id"].toString()))
+        collection.deleteOne(collection.findOneById(ObjectId(id)))
     }
 
     fun get(collectionName: String, id: String): Document?{

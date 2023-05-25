@@ -28,9 +28,9 @@ class UserManager {
         return dataBase.get("user", id)
     }
 
-    fun removeUser(user: User) :Boolean{
-        if (dataBase.isNameFieldExist("user", "username", user.getUsername())) {
-            dataBase.delete("user", this.userToDoc(user))
+    fun removeUser(id: String) :Boolean{
+        if (dataBase.isExist("user", id)) {
+            dataBase.delete("user", id)
             return true
         }
         return false

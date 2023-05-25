@@ -53,6 +53,10 @@ fun Route.usersRouting() {
             if (userManager.setUserData(call.parameters["user_id"].toString(), userRequest))call.respond(HttpStatusCode.OK, "Updated")
             else call.respond(HttpStatusCode.BadRequest, "Not found")
         }
+        delete("/delete/{user_id}") {
+            if (userManager.removeUser(call.parameters["user_id"].toString()))call.respond(HttpStatusCode.OK, "Deleted")
+            else call.respond(HttpStatusCode.BadRequest, "Not found")
+        }
     }
 }
 
