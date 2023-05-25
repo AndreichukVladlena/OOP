@@ -2,6 +2,7 @@ package com.example.DBManagers
 
 import com.mongodb.ConnectionString
 import com.mongodb.MongoClientSettings
+import com.mongodb.client.FindIterable
 import com.mongodb.client.MongoClient
 import com.mongodb.client.MongoClients
 import com.mongodb.client.MongoDatabase
@@ -59,6 +60,11 @@ object DataBase {
         val usersDoc = collection.findOneById(id)
         if (usersDoc !=null) return usersDoc[field]
         else return null
+    }
+
+    fun getItemByField(collectionName: String, field:String, id:String): FindIterable<Document> {
+        val collection = database.getCollection(collectionName)
+        return collection.find(eq(field, id))
     }
 
     fun isExist(collectionName: String, id:String):Boolean{ //true if exists

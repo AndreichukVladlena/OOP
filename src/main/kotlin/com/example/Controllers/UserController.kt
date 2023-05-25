@@ -11,21 +11,7 @@ import io.ktor.server.routing.*
 
 fun Route.usersRouting() {
     var userManager = UserManager()
-    var user1=User("vlan", "4567")
-    user1.setMale("male")
-    user1.setHeight(180.0F)
-    user1.setWeight(58.0F)
-    userManager.addUser(user1)
-//    user1.setMale("female")
-//    user1.setBirthDate(2004, 6, 27)
-//    var user2=User("spuna", "458745")
-//    var user3=User("sd", "556556")
-//    userManager.addUser(user1)
-//    userManager.addUser(user2)
-//    userManager.addUser(user3)
-//    userManager.setUserData(user1)
-//    userManager.setUserData(user2)
-//    userManager.setUserData(user3)
+
     route("api/users") {
         get("/get/{user_id}") {
             val userData = userManager.getUserData(call.parameters["user_id"].toString())
@@ -59,11 +45,4 @@ fun Route.usersRouting() {
         }
     }
 }
-
-fun Application.registerRoutes() {
-    routing {
-        usersRouting()
-    }
-}
-
 

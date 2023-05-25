@@ -3,6 +3,7 @@ package src.DBManagers
 import ActualFoodItem
 import DBManagers.FoodManager
 import com.example.DBManagers.DataBase
+import com.mongodb.client.FindIterable
 import org.bson.Document
 import org.bson.types.ObjectId
 
@@ -54,10 +55,15 @@ class ActualFoodManager{
     fun actualItemToDoc(item: ActualFoodItem): Document {
         return Document(mapOf(
             "_id" to ObjectId(),
+            "userId" to item.getUserId(),
             "name" to item.getActualItemName(),
             "creation date" to item.getDate(),
             "calories" to item.getDate(),
             "amount" to item.getItemAmount(),
             "result calories" to item.getResultCalories()))
+    }
+
+    fun getUsersFood(id:String): FindIterable<Document> {
+        return dataBase.getItemByField("actual food items", "userId", id)
     }
 }
