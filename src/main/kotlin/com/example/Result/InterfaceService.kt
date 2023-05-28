@@ -1,4 +1,6 @@
+
 import com.example.Entities.User
+import com.example.Result.IResult
 import com.example.const.maleList
 class InterfaceService() {
     fun chooseResult(user:User): IResult? {

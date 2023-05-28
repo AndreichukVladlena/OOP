@@ -1,7 +1,15 @@
-import com.example.Entities.User
-import com.example.const.aimList
 
-class FemaleResult(private val user: User) : IResult {
+import com.example.Entities.User
+import com.example.Result.IResult
+import com.example.const.aimList
+import kotlinx.serialization.Contextual
+import kotlinx.serialization.Serializable
+import org.bson.types.ObjectId
+import org.intellij.lang.annotations.Identifier
+
+@Serializable
+class FemaleResult(override val user: User) : IResult {
+    @Transient
     override val physicalActivityLevels = mapOf(
         "low" to "Less than 30 minutes of moderate-intensity physical activity per day.",
         "normal" to "30 minutes of moderate-intensity physical activity per day.",
@@ -12,6 +20,11 @@ class FemaleResult(private val user: User) : IResult {
     override var normalWeight:Float=calculateNormalWeight()
     override var waterNorm:Float=calculateWaterNorm()
     override var physActivityNorm:String=calculatePhysActivityNorm()
+    override var userId: String = user.id.toString()
+    @Identifier
+    @Contextual
+    @Transient
+    override val id: ObjectId? = null
     override fun calculateNormalWeight(): Float{
         return ((user.getHeight() - 100) * 0.9).toFloat()
     }

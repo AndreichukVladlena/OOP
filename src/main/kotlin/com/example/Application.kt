@@ -1,7 +1,7 @@
 package com.example
 
 import com.example.Controllers.actualFoodRouting
-import com.example.Controllers.registerRoutes
+//import com.example.Controllers.registerRoutes
 import com.example.Controllers.usersRouting
 import com.example.plugins.configureSerialization
 import io.ktor.server.application.*

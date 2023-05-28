@@ -1,3 +1,4 @@
+import com.example.Result.IResult
 class WaterTracker(private val result: IResult) {
     private var actualWaterAmount : Float = 0.0F
 

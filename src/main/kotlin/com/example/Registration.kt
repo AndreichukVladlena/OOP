@@ -1,7 +1,6 @@
+
 import DBManagers.UserManager
 import com.example.Entities.User
-import kotlin.collections.*
-import kotlin.text.*
 class Registration {
 //    private val users = mutableListOf<Pair<String, String>>()
     private val userManager = UserManager()
@@ -17,7 +16,7 @@ class Registration {
         return true
     }
 
-    fun loginUser(user:User): Boolean {
-        return userManager.userExists(user)
+    fun loginUser(user:User) {
+//        return userManager.userExists(user)
     }
 }

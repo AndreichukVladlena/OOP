@@ -4,8 +4,10 @@ import kotlinx.datetime.LocalDate
 import kotlinx.datetime.minus
 import kotlinx.serialization.Contextual
 import kotlinx.serialization.Serializable
+import kotlinx.serialization.Transient
 import org.bson.types.ObjectId
 import org.intellij.lang.annotations.Identifier
+import kotlin.math.absoluteValue
 
 @Serializable
 data class User(private val username:String, private var password:String) {
@@ -22,7 +24,7 @@ data class User(private val username:String, private var password:String) {
     @Identifier
     @Contextual
     @Transient
-    val id: ObjectId? = null
+    var id: ObjectId? = null
     init {
         require(username.isNotBlank()) { "Username must not be blank" }
         require(password.isNotBlank()) { "Password must not be blank" }
@@ -49,7 +51,7 @@ data class User(private val username:String, private var password:String) {
     }
 
     fun setAge() {
-        this.age= this.birthDate!!.minus(LocalDate(2023,5,23)).years
+        this.age= this.birthDate!!.minus(LocalDate(2023,5,23)).years.absoluteValue
 //        this.age=ChronoUnit.YEARS.between(this.birthDate, LocalDate(2023, 5, 23)).toInt()
     }
 

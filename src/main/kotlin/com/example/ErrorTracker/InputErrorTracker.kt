@@ -1,6 +1,6 @@
 package com.example.ErrorTracker
 import kotlin.collections.List
-import IResult
+import com.example.Result.IResult
 
 
     fun registrationResult(flag: Boolean): String {
