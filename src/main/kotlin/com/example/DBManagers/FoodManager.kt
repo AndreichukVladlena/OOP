@@ -1,36 +1,36 @@
 package DBManagers
 
+import FoodItem
+import com.example.DBManagers.DataBase
+import org.bson.Document
+import org.bson.types.ObjectId
+
 class FoodManager{
-//    private var dataBase = DataBase
-//    fun addFoodItem(item: FoodItem):Boolean{
-//        if (dataBase.isNameFieldExist("food items", "name", item.getItemName())){
-//            return false
-//        }else {
-//            dataBase.insert("food items", this.itemToDoc(item))
-//            return true
-//        }
-//    }
-//
-//    fun getItemData(id: String): Document?{
-//        return dataBase.get("food items", id)
-//    }
-//
-//    fun removeFoodItem(id: String) :Boolean{
-//        if (dataBase.isExist("food items", id)) {
-//            dataBase.delete("food items", id)
-//            return true
-//        }
-//        return false
-//    }
-//
-//    fun foodItemExists(item: FoodItem):Boolean{
-//        return dataBase.isNameFieldExist("food items", "name", item.getItemName())
-//    }
-//
-//    fun itemToDoc(item: FoodItem): Document {
-//        return Document(mapOf(
-//            "_id" to ObjectId(),
-//            "name" to item.getItemName(),
-//            "calories" to item.getItemCalories()))
-//    }
+    private var dataBase = DataBase
+    fun addFoodItem(item: FoodItem):String{
+        var doc = Document()
+
+        doc["name"]=item.getItemName()
+        doc["calories"]=item.getItemCalories()
+
+        return dataBase.insert("food item", doc)
+    }
+
+    fun getItemData(name: String): Document?{
+        return dataBase.getByFieldValue("food item", "name", name)
+    }
+
+    fun itemExists(name: String):Boolean{
+        return dataBase.getByFieldValue("food item", "name", name)!=null
+    }
+
+    fun removeFoodItem(name: String) :Boolean{
+        val item = this.getItemData(name)
+        val itemId:ObjectId
+        if (item!=null && item.containsKey("_id")){
+            itemId = ObjectId(item["_id"].toString())
+            dataBase.delete("food item", itemId.toString())
+            return true
+        }else return false
+    }
 }
