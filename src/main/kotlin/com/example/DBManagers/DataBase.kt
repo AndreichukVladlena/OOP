@@ -2,9 +2,7 @@ package com.example.DBManagers
 
 import com.mongodb.ConnectionString
 import com.mongodb.MongoClientSettings
-import com.mongodb.client.MongoClient
-import com.mongodb.client.MongoClients
-import com.mongodb.client.MongoDatabase
+import com.mongodb.client.*
 import com.mongodb.client.model.Filters.eq
 import com.mongodb.client.model.Updates
 import org.bson.Document
@@ -45,6 +43,12 @@ object DataBase {
         return collection.find(query).first()
     }
 
+    fun getSeveralByFieldValue(collectionName: String, field: String, value: Any): FindIterable<Document> {
+        val collection = database.getCollection(collectionName)
+        val query = Document(field, value)
+        return collection.find(query)
+    }
+
     fun getFieldValue(collectionName: String, id:String, field: String):Any?{
         val collection = database.getCollection(collectionName)
         val currDoc = collection.findOneById(ObjectId(id))
@@ -59,6 +63,10 @@ object DataBase {
     fun delete(collectionName: String, id:String) {
         val collection = database.getCollection(collectionName)
         collection.deleteOne(collection.findOneById(ObjectId(id)))
+    }
+
+    fun getDB(collectionName: String): MongoCollection<Document> {
+        return database.getCollection(collectionName)
     }
 
 //    fun get(collectionName: String, id: String): Document?{
