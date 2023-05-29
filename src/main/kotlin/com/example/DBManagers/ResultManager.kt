@@ -1,62 +1,40 @@
 package com.example.DBManagers
 
+import com.example.Result.IResult
+import org.bson.Document
+
 class ResultManager {
-//    private var dataBase = DataBase
-//
-//    fun addResult(result:IResult){ //+
-//        dataBase.insert("result", this.resultToDoc(result))
-//    }
-//
-//    fun getUserResult(id: String): Document? { //+
-//        val itemId = dataBase.getItemIdByField("result", "userId", id)
-//        return if(itemId!=null) dataBase.get("result", itemId)
-//        else null
-//    }
-//
-//    fun isResultExists(id:String):Boolean{ //+
-//        return dataBase.isNameFieldExist("result", "userId", id)
-//    }
-//
-//    fun updateResult(id:String, result: IResult?):Boolean{
-//        val itemId = dataBase.getItemIdByField("result", "userId", id)
-//        var item = dataBase.get("result", itemId.toString())
-//        if (result!=null && itemId!=null) {
-//            dataBase.replaceDoc("result", itemId, this.resultToDoc(result))
-//            return true
-//        }else return false
-////        if (item!=null && result!=null) {
-////            item.replace("caloriesNorm", result.caloriesNorm)
-////            item.replace("normalWeight", result.normalWeight)
-////            item.replace("waterNorm", result.waterNorm)
-////            item.replace("physActivityNorm", result.physActivityNorm)
-////        }
-////        if (itemId!=null && result!=null) {
-////            dataBase.replaceDoc("result", itemId, this.resultToDoc(result))
-////            return true
-////        }
-////        else return false
-//    }
-//
-//    fun setResultData(id: String, result: IResult?):Boolean{
-//        val itemId = dataBase.getItemIdByField("result", "userId", id)
-//        return if (result!=null && dataBase.isExist("result", itemId.toString())){
-//            dataBase.delete("result", itemId.toString())
-//            dataBase.insert("result", this.resultToDoc(result))
-////            dataBase.replaceDoc("result", itemId.toString(), this.resultToDoc(result))
-//            true
-//        }else{
-//            false
-//        }
-//    }
-//
-//    fun resultToDoc(result: IResult):Document{ //+
-//        return Document(mapOf(
-//            "_id" to ObjectId(),
-//            "caloriesNorm" to result.caloriesNorm,
-//            "normalWeight" to result.normalWeight,
-//            "waterNorm" to result.waterNorm,
-//            "physActivityNorm" to result.physActivityNorm,
-//            "userId" to result.userId
-//        ))
-//    }
+    private var dataBase = DataBase
+
+    fun addResult(result: IResult):String{
+        var doc = Document()
+
+        doc["caloriesNorm"]=result.caloriesNorm
+        doc["normalWeight"]=result.normalWeight
+        doc["waterNorm"]=result.waterNorm
+        doc["physActivityNorm"]=result.physActivityNorm
+        doc["userId"]=result.userId
+        return dataBase.insert("result", doc)
+    }
+
+    fun getResult(id:String):Document?{
+        return dataBase.getByFieldValue("result", "userId", id)
+    }
+
+    fun setResultData(id:String, result: IResult):Boolean{
+        val item = dataBase.getByFieldValue("result", "userId", id)
+        val itemId:String
+        if(item!=null) itemId = item["_id"].toString()
+        else return false
+        dataBase.update("result", itemId, "caloriesNorm", result.caloriesNorm)
+        dataBase.update("result", itemId, "normalWeight", result.normalWeight)
+        dataBase.update("result", itemId, "waterNorm", result.waterNorm)
+        dataBase.update("result", itemId, "physActivityNorm", result.physActivityNorm)
+        dataBase.update("result", itemId, "userId", result.userId)
+        return true
+    }
+
+    fun resultExists(id:String):Boolean{
+        return dataBase.getByFieldValue("result", "userId", id)!=null
+    }
 }
