@@ -3,6 +3,7 @@ package src.DBManagers
 import ActualFoodItem
 import DBManagers.FoodManager
 import com.example.DBManagers.DataBase
+import com.mongodb.client.FindIterable
 import org.bson.Document
 
 
@@ -43,43 +44,7 @@ class ActualFoodManager{
         return false
     }
 
-//    fun getActualFoodItemData(id: String): Document?{
-//        return dataBase.get("actual food items", id)
-//    }
-//
-//    fun removeActualFoodItem(id: String) :Boolean{
-//        if (dataBase.isExist("actual food items", id)) {
-//            dataBase.delete("actual food items", id)
-//            return true
-//        }
-//        return false
-//    }
-//
-//    fun actualFoodItemExists(item: ActualFoodItem):Boolean{
-//        return dataBase.isNameFieldExist("actual food items", "name", item.getActualItemName())
-//    }
-//
-//    fun actualItemToDoc(item: ActualFoodItem): Document {
-//        return Document(mapOf(
-//            "_id" to ObjectId(),
-//            "userId" to item.getUserId(),
-//            "name" to item.getActualItemName(),
-//            "creation date" to item.getDate(),
-//            "calories" to item.getDate(),
-//            "amount" to item.getItemAmount(),
-//            "result calories" to item.getResultCalories()))
-//    }
-//
-//    fun getUsersFood(id:String): FindIterable<Document> {
-//        return dataBase.getItemsByField("actual food items", "userId", id)
-//    }
-//
-//    fun findItemByName(id: String, name: String):String{
-//        val usersFood = this.getUsersFood(id)
-//        for (item in usersFood){
-//            if (item["name"]==name) return item["_id"].toString()
-//        }
-//    return ""
-//    }
-
+    fun getUsersFood(id: String): FindIterable<Document> {
+        return dataBase.getSeveralByFieldValue("actual food items", "userId", id)
+    }
 }

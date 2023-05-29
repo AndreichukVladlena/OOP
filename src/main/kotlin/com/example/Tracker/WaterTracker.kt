@@ -1,5 +1,6 @@
-import com.example.Result.IResult
-class WaterTracker(private val result: IResult) {
+import org.bson.Document
+
+class WaterTracker(private val result: Document) {
     private var actualWaterAmount : Float = 0.0F
 
     fun getActualWaterAmount():Float{
@@ -14,6 +15,6 @@ class WaterTracker(private val result: IResult) {
     }
 
     fun waterNormDiff():Float{
-        return result.waterNorm-this.actualWaterAmount
+        return result["waterNorm"].toString().toFloat()-this.actualWaterAmount
     }
 }
