@@ -1,14 +1,11 @@
 package com.example.DBManagers
 
-import Tracker
 import org.bson.Document
 
 
-class TrackerManager(private val result: Document){
-//    private val foodTracker = FoodTracker(result)
-//    private val waterTracker = WaterTracker(result)
+class TrackerManager(){
     private var dataBase = DataBase
-    private var tracker= Tracker(result)
+
 
     fun addTracker(id:String):String{
         var doc = Document()
@@ -17,31 +14,118 @@ class TrackerManager(private val result: Document){
         doc["calories diff"]=0.0F
         doc["actual water amount"]=0.0F
         doc["water diff"]=0.0F
+        doc["physical activity min"]=0.0F
+        doc["physical activity diff"]=0.0F
+        doc["success grade"]=0.0F
         doc["userId"]=id
 
-        tracker.setActualKilocalories()
+        this.setActualCalories(id)
 
         return dataBase.insert("tracker", doc)
     }
 
-    fun addWater(id: String){
-        var usersTracker = dataBase.getByFieldValue("tracker", "userId", id)
-        tracker.addWaterGlass()
+    fun getTracker(id:String):Document?{
+        return dataBase.getByFieldValue("tracker", "userId", id)
     }
 
-    fun removeWater(id:String){
-        var usersTracker = dataBase.getByFieldValue("tracker", "userId", id)
-        tracker.removeWaterGlass()
+    fun trackerExists(id: String):Boolean{
+        return dataBase.getByFieldValue("tracker", "userId", id)!=null
     }
 
-    fun updateTracker(id:String):Boolean{
-        val usersTracker = dataBase.getByFieldValue("tracker", "userId", id)
-        if (usersTracker!=null){
-            val trackerId = usersTracker["_id"]
-            dataBase.update("tarcker", trackerId.toString(), "actual calories", tracker.getActualCalories())
-            dataBase.update("tarcker", trackerId.toString(), "calories diff", tracker.getActualCalories())
-            dataBase.update("tarcker", trackerId.toString(), "actual water amount", tracker.getActualWaterAmount())
-            dataBase.update("tarcker", trackerId.toString(), "water diff", tracker.waterNormDiff())
+    fun setActualCalories(id:String):Boolean{
+        val usersFood = dataBase.getSeveralByFieldValue("actual food items", "userId", id)
+        var actualCalories = 0.0F
+        for(item in usersFood){
+            actualCalories += (item["calories"].toString().toFloat() * item["amount"].toString().toFloat())
+        }
+
+        val item = dataBase.getByFieldValue("tracker", "userId", id)
+        val itemId:String
+        if(item!=null) itemId = item["_id"].toString()
+        else return false
+        dataBase.update("tracker", itemId, "actual calories", actualCalories)
+
+        val usersResult = dataBase.getByFieldValue("result", "userId", id)
+        val resultId:String
+        if(usersResult!=null) resultId = usersResult["_id"].toString()
+        else return false
+        val caloriesNorm = dataBase.getFieldValue("result", resultId, "caloriesNorm").toString().toFloat()
+
+        dataBase.update("tracker", itemId, "calories diff", caloriesNorm-actualCalories)
+        this.setSuccessGrade(id)
+        return true
+    }
+
+    fun addWater(id: String):Boolean{
+        val item = dataBase.getByFieldValue("tracker", "userId", id)
+        val itemId:String
+        if(item!=null) itemId = item["_id"].toString()
+        else return false
+
+        var actualWater = dataBase.getFieldValue("tracker", itemId, "actual water amount").toString().toFloat()
+        actualWater+=0.25F
+        dataBase.update("tracker", itemId, "actual water amount", actualWater)
+
+
+        val usersResult = dataBase.getByFieldValue("result", "userId", id)
+        val resultId:String
+        if(usersResult!=null) resultId = usersResult["_id"].toString()
+        else return false
+        val waterNorm = dataBase.getFieldValue("result", resultId, "waterNorm").toString().toFloat()
+
+        dataBase.update("tracker", itemId, "water diff", waterNorm-actualWater)
+        this.setSuccessGrade(id)
+        return true
+    }
+
+    fun removeWater(id:String):Boolean{
+        val item = dataBase.getByFieldValue("tracker", "userId", id)
+        val itemId:String
+        if(item!=null) itemId = item["_id"].toString()
+        else return false
+
+        var actualWater = dataBase.getFieldValue("tracker", itemId, "actual water amount").toString().toFloat()
+        actualWater-=0.25F
+        dataBase.update("tracker", itemId, "actual water amount", actualWater)
+
+
+        val usersResult = dataBase.getByFieldValue("result", "userId", id)
+        val resultId:String
+        if(usersResult!=null) resultId = usersResult["_id"].toString()
+        else return false
+        val waterNorm = dataBase.getFieldValue("result", resultId, "waterNorm").toString().toFloat()
+
+        dataBase.update("tracker", itemId, "water diff", waterNorm-actualWater)
+        this.setSuccessGrade(id)
+        return true
+    }
+
+    fun setPhysicalActivity(id: String, min:Float):Boolean{
+        val item = dataBase.getByFieldValue("tracker", "userId", id)
+        val itemId:String
+        if(item!=null) itemId = item["_id"].toString()
+        else return false
+
+        dataBase.update("tracker", itemId, "physical activity min", min)
+        dataBase.update("tracker", itemId, "physical activity diff", (60.0F-min))
+
+        this.setSuccessGrade(id)
+        return true
+    }
+
+    fun setSuccessGrade(id: String):Boolean{
+        val item = dataBase.getByFieldValue("tracker", "userId", id)
+        val itemId:String
+        if(item!=null) itemId = item["_id"].toString()
+        else return false
+
+        val usersResult = dataBase.getByFieldValue("result", "userId", id)
+
+        if(usersResult!=null) {
+            val successGrade = item["actual calories"].toString().toFloat() / usersResult["caloriesNorm"].toString()
+                .toFloat() + item["actual water amount"].toString().toFloat() / usersResult["waterNorm"].toString()
+                .toFloat() + item["physical activity min"].toString().toFloat() / 60.0F.toFloat()
+            dataBase.update("tracker", itemId, "success grade", successGrade)
             return true
         }else return false
     }

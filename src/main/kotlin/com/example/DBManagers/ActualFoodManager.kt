@@ -39,7 +39,7 @@ class ActualFoodManager{
     fun isUserItemExists(id:String, name: String):Boolean{
         val usersFood = dataBase.getSeveralByFieldValue("actual food items", "userId", id)
         for (item in usersFood){
-            if (dataBase.getByFieldValue("actual food items", "name", name)!=null) return true
+            if (item["name"].toString()==name) return true
         }
         return false
     }

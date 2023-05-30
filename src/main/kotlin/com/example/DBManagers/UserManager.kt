@@ -22,13 +22,6 @@ class UserManager {
         return dataBase.insert("user", doc)
     }
 
-//        if (dataBase.isNameFieldExist("user", "username", user.getUsername())){
-//            return false
-//        }else {
-//            dataBase.insert("user", this.userToDoc(user))
-//            return true
-//        }
-
     fun getUserData(id: String):Document?{
         return dataBase.get("user", id)
     }
@@ -56,53 +49,16 @@ class UserManager {
         }
         return false
     }
-//
-//    fun usernameExists(user:User):Boolean{
-//        if (dataBase.getByFieldValue("user", "username", user.getUsername())!=null)return true
-//        else return false
-//    }
 
     fun userExists(id: String): Boolean{
         return dataBase.itemByIdExists("user", id)
     }
 
+    fun login(user: User):Boolean{
+        return (dataBase.getByFieldValue("user", "username", user.getUsername())!=null && dataBase.getByFieldValue("user", "password", user.getPassword())!=null)
+    }
+
     fun usernameExists(user: User): Boolean{
         return dataBase.getByFieldValue("user", "username", user.getUsername())!=null
     }
-    
-//    fun userToDoc(user:User):Document{
-//        return Document(mapOf(
-//            "_id" to user.id,
-//            "username" to user.getUsername(),
-//            "password" to user.getPassword(),
-//            "male" to user.getMale(),
-//            "age" to user.getAge(),
-//            "weight" to user.getWeight(),
-//            "height" to user.getHeight(),
-//            "aim" to user.getAim(),
-//            "waterAmount" to user.getWaterAmount(),
-//            "physicalActivity" to user.getPhysicalActivity(),
-//            "birthDate" to user.getBirthDate()))
-//
-//    }
-
-//    fun userToDoc(user: User): Document {
-//        val document = Document()
-//        document["_id"] = user.id ?: ObjectId()
-//        document["username"] = user.getUsername()
-//        document["password"] = user.getPassword()
-//        document["male"] = user.getMale()
-//        document["age"] = user.getAge()
-//        document["weight"] = user.getWeight()
-//        document["height"] = user.getHeight()
-//        document["aim"] = user.getAim()
-//        document["waterAmount"] = user.getWaterAmount()
-//        document["physicalActivity"] = user.getPhysicalActivity()
-//        document["birthDate"] = user.getBirthDate()
-//
-//        return document
     }
-
-//    fun usersList(): MutableList<User>{
-//        return users
-//    }

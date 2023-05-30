@@ -11,8 +11,7 @@ import kotlin.math.absoluteValue
 
 @Serializable
 data class User(private val username:String, private var password:String) {
-//    private val username:String = name
-//    private var password:String = pass
+
     private var male: String = "null"
     private var age: Int = 0
     private var weight: Float = 0.0F
@@ -52,7 +51,6 @@ data class User(private val username:String, private var password:String) {
 
     fun setAge() {
         this.age= this.birthDate!!.minus(LocalDate(2023,5,23)).years.absoluteValue
-//        this.age=ChronoUnit.YEARS.between(this.birthDate, LocalDate(2023, 5, 23)).toInt()
     }
 
     fun getWeight(): Float {
@@ -102,8 +100,5 @@ data class User(private val username:String, private var password:String) {
     fun setBirthDate(year: Int,month:Int,day:Int){
         this.birthDate = LocalDate(year,month,day)
     }
-//    fun setBirthDate(date:LocalDate){
-//        this.birthDate=date
-//    }
 
 }

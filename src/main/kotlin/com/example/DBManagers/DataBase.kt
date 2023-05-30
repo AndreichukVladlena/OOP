@@ -69,44 +69,6 @@ object DataBase {
         return database.getCollection(collectionName)
     }
 
-//    fun get(collectionName: String, id: String): Document?{
-//        val collection = database.getCollection(collectionName)
-//        return collection.findOneById(ObjectId(id))
-//    }
-
-
-//    fun getFieldValue(collectionName: String, id: String, field: String):Any?{
-//        val collection = database.getCollection(collectionName)
-//        val usersDoc = collection.findOneById(ObjectId(id))
-//        if (usersDoc !=null) return usersDoc[field]
-//        else return null
-//    }
-
-//    fun getItemIdByField(collectionName: String, field:String, value:String): String? {
-//        val collection = database.getCollection(collectionName)
-//        return collection.findOne(eq(field, value))?.get("_id").toString()
-//    }
-//
-//    fun getItemsByField(collectionName: String, field:String, value:Any): FindIterable<Document> {
-//        val collection = database.getCollection(collectionName)
-//        return collection.find(eq(field, value))
-//    }
-//
-//    fun isExist(collectionName: String, id:String):Boolean{ //true if exists
-//        val collection= database.getCollection(collectionName)
-//        return collection.findOneById(ObjectId(id))!=null
-//    }
-//
-//    fun isNameFieldExist(collectionName: String, field:String, fieldValue:String):Boolean{ //true uf exists
-//        val collection= database.getCollection(collectionName)
-//        return collection.find(eq(field, fieldValue)).first()!=null
-//    }
-//
-//    fun replaceDoc(collectionName: String,id: String, document: Document){
-//        val collection = database.getCollection(collectionName)
-//        collection.replaceOne(collection.findOneById(ObjectId(id)), document)
-//    }
-
     fun close() {
         client.close()
     }
